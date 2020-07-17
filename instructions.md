@@ -1,5 +1,11 @@
 # Instructions
 
+Make sure `GEM_HOME` is set properly. If not run the following first
+
+```
+export GEM_HOME=$HOME/gems
+```
+
 ## To run site locally
 
 ```
