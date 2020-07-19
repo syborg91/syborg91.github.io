@@ -8,6 +8,13 @@
         </a>
       </li>
     {% endif %}
+    {% if site.social.mail %}
+      <li>
+        <a href="mailto:satya.borg@gmail.com" rel="noreferrer noopener" target="_blank" title="Mail">
+          {% include svg-icon.html icon="mail" %}
+        </a>
+      </li>
+    {% endif %}
     {% if site.social.twitter %}
       <li>
         <a href="https://twitter.com/{{ site.social.twitter }}" rel="noreferrer noopener" target="_blank" title="Twitter">

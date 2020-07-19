@@ -2,7 +2,7 @@
 layout: post
 title: "Understanding Tensors in PyTorch 🔥"
 description: "In this first post, I will try to deconstruct tensors which are the fundamental data structures behind neural networks."
-thumb_image: "documentation/sample-image.jpg"
+thumb_image: "documentation/post-1/5.png"
 tags: [pytorch, deep-learning, basics]
 ---
 
