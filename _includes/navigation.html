@@ -4,21 +4,14 @@
     {% if site.about_enabled == true %}
       <li>
         <a href="{{ 'about' | relative_url }}" title="About me">
-          {% include svg-icon.html icon="about" %}
-        </a>
-      </li>
-    {% endif %}
-    {% if site.social.mail %}
-      <li>
-        <a href="mailto:satya.borg@gmail.com" rel="noreferrer noopener" target="_blank" title="Mail">
-          {% include svg-icon.html icon="mail" %}
+          <i class="fas fa-user-circle fa-sm"></i>
         </a>
       </li>
     {% endif %}
     {% if site.social.twitter %}
       <li>
         <a href="https://twitter.com/{{ site.social.twitter }}" rel="noreferrer noopener" target="_blank" title="Twitter">
-          {% include svg-icon.html icon="twitter" %}
+          <i class="fab fa-twitter fa-sm"></i>
         </a>
       </li>
     {% endif %}
@@ -39,7 +32,7 @@
     {% if site.social.github %}
       <li>
         <a href="https://github.com/{{ site.social.github }}" rel="noreferrer noopener" target="_blank" title="GitHub">
-          {% include svg-icon.html icon="github" %}
+          <i class="fab fa-github fa-sm"></i>
         </a>
       </li>
     {% endif %}
@@ -81,7 +74,7 @@
     {% if site.social.linkedin %}
       <li>
         <a href="https://www.linkedin.com/in/{{ site.social.linkedin }}" rel="noreferrer noopener" target="_blank" title="LinkedIn">
-          {% include svg-icon.html icon="linkedin" %}
+          <i class="fab fa-linkedin fa-sm"></i>
         </a>
       </li>
     {% endif %}
@@ -165,21 +158,21 @@
     {% if site.social.email %}
       <li>
         <a href="mailto:{{ site.social.email }}" title="Email">
-          {% include svg-icon.html icon="email" %}
+          <i class="fas fa-envelope fa-sm"></i>
         </a>
       </li>
     {% endif %}
     {% if site.rss_enabled == true %}
       <li>
         <a href="{{ 'feed.xml' | relative_url }}" rel="noreferrer noopener" target="_blank" title="RSS">
-          {% include svg-icon.html icon="rss" %}
+          <i class="fas fa-rss fa-sm"></i>
         </a>
       </li>
     {% endif %}
     {% if site.theme_toggle == true %}
       <li>
         <a onclick="toggle()" title="Toggle Theme">
-          {% include svg-icon.html icon="theme" %}
+          <i class="fas fa-adjust fa-sm"></i>
         </a>
       </li>
     {% endif %}
