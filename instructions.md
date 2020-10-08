@@ -32,3 +32,5 @@ git push origin development
 npm run publish
 ```
 
+Note: Set up github actions for the same.
+Set custom domain each time.

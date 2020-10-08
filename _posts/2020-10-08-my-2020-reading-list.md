@@ -7,7 +7,7 @@ tags: [books, nlp]
  
 Earlier this year, I challenged myself to read at least 10 books (and promptly signed up for the Goodreads challenge!)
  
-**10** might *seem* like a modest number to the more seasoned bookworms out there but it's really not. Not for someone like me who has fallen out of the habit. It's time now more than ever when we need the antidote to the shallow, recycled articles, TLDRs and clickbait infested pockets of the internet.
+**10** might *seem* like a modest number to the more seasoned bookworms out there but it's really not for someone like me who has fallen out of the habit. But now is the time, more than ever, when we need the antidote to the shallow, recycled, TLDRs and clickbait infested pockets of the internet.
 
 In no particular order here are my picks for this year:
 
@@ -25,7 +25,6 @@ In no particular order here are my picks for this year:
 8. [Kafka on the Shore](https://www.goodreads.com/book/show/4929.Kafka_on_the_Shore) by Haruki Murakami
 9. [Neuromancer](https://www.goodreads.com/book/show/6088007-neuromancer) by William Gibson
 10. [Brave New World](https://www.goodreads.com/book/show/5129.Brave_New_World) by Aldous Huxley
-
 
 Now for the experiment — After finishing each of these illustrious titles, I would train a language model to see if my (now *altered*) worldview concurs with the latent space that contains a fuzzy mixure of concepts from these books. A model of my literary pursuits in the year 2020, if you will.
  
