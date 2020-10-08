@@ -1,2 +1,2 @@
-# syborg91.github.io
+# syborg.dev
 Musings of a polymorphic ape.
