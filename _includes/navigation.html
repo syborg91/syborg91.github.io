@@ -4,9 +4,9 @@
     {% if site.about_enabled == true %}
       <li>
         <a href="{{ 'about' | relative_url }}" title="About me">
-          <!-- <i class="fas fa-user-circle "></i> -->
-          <!-- <i class="far fa-comment-dots "></i> -->
-          <i class="fas fa-quote-left "></i>
+          <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+          <!-- <i class="far fa-comment-dots fa-sm"></i> -->
+          <i class="fas fa-quote-left fa-sm"></i>
           <!-- <i class="fas fa-glasses"></i> -->
         </a>
       </li>
@@ -14,16 +14,16 @@
     {% if site.tag_cloud_enabled == true %}
     <li>
       <a href="{{ 'tags' | relative_url }}" title="Tags">
-        <i class="fas fa-tags " aria-hidden="true"></i>
+        <i class="fas fa-tags fa-sm" aria-hidden="true"></i>
       </a>
     </li>
     {% endif %}
     {% if site.theme_toggle == true %}
     <li>
       <a onclick="toggle()" title="Toggle Theme">
-        <!-- <i class="fas fa-adjust "></i> -->
+        <!-- <i class="fas fa-adjust fa-sm"></i> -->
         <!-- <i class="fas fa-lightbulb"></i> -->
-        <i class="fas fa-toggle-on"></i>
+        <i class="fas fa-toggle-on fa-sm"></i>
       </a>
     </li>
   {% endif %}
