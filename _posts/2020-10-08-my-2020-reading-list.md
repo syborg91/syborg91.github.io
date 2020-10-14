@@ -12,7 +12,7 @@ Earlier this year, I challenged myself to read at least 10 books (and promptly s
 In no particular order here are my picks for this year:
 
 ## Non-fiction
-1. [Thinking Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow) by Daniel Kahnman
+1. [Thinking Fast and Slow](https://www.goodreads.com/book/show/11468377-thinking-fast-and-slow) by Daniel Kahneman
 2. [Wherever You Go, There You Are](https://www.goodreads.com/book/show/14096.Wherever_You_Go_There_You_Are) by Jon Kabat-Zinn
 3. [Life 3.0: Being Human in the Age of Artificial Intelligence](https://www.goodreads.com/book/show/34272565-life-3-0) by Max Tegmark
 4. [Something Deeply Hidden: Quantum Worlds and the Emergence of Spacetime](https://www.goodreads.com/book/show/44065062-something-deeply-hidden) by Sean Caroll
