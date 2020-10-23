@@ -1,6 +1,6 @@
 # Mandatory settings
 
-blog_theme: light # Or use dark
+blog_theme: light # or use dark
 name: Satya Borgohain
 description: Musings of a polymorphic ape.
 paginate: 10
