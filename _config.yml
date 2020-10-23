@@ -9,7 +9,8 @@ attribution: https://github.com/nielsenramon/chalk
 
 # Optional settings
 
-about_enabled: true # Change to true if you wish to show an icon in the navigation that redirects to the about page
+about_enabled: true # Change to true if you wish to show an icon in the navigation that redirects to the about pagere
+research: false
 discus_identifier: syborg-dev # Add your Disqus identifier
 ga_analytics: UA-143745680-2 # Add your GA Tracking Id
 local_fonts: true # Change to true if you wish to use local fonts

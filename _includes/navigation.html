@@ -1,29 +1,38 @@
 <nav class="header-nav {% if site.scrollappear_enabled %}scrollappear{% endif %}">
   <a href="{{ '/' | relative_url }}" class="header-logo" title="{{ site.name }}">{{ site.name }}</a>
   <ul class="header-links">
+    {% if site.tag_cloud_enabled == true %}
+    <li>
+      <a href="{{ 'tags' | relative_url }}" title="Tags">
+        <!-- <i class="fas fa-tags fa-sm" aria-hidden="true"></i> -->
+        <i class="fas fa-hashtag fa-sm"></i>
+      </a>
+    </li>
+    {% endif %}
     {% if site.about_enabled == true %}
       <li>
         <a href="{{ 'about' | relative_url }}" title="About me">
           <!-- <i class="fas fa-user-circle fa-sm"></i> -->
-          <!-- <i class="far fa-comment-dots fa-sm"></i> -->
-          <i class="fas fa-quote-left fa-sm"></i>
+          <i class="far fa-comment-dots fa-sm"></i>
+          <!-- <i class="fas fa-quote-left fa-sm"></i> -->
           <!-- <i class="fas fa-glasses"></i> -->
         </a>
       </li>
     {% endif %}
-    {% if site.tag_cloud_enabled == true %}
-    <li>
-      <a href="{{ 'tags' | relative_url }}" title="Tags">
-        <i class="fas fa-tags fa-sm" aria-hidden="true"></i>
-      </a>
-    </li>
+    {% if site.research == true %}
+      <li>
+        <a href="{{ 'about' | relative_url }}" title="Research">
+          <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+          <i class="fas fa-sticky-note fa-sm"></i>
+        </a>
+      </li>
     {% endif %}
     {% if site.theme_toggle == true %}
     <li>
-      <a onclick="toggle()" title="Toggle Theme">
+      <a onclick="toggle()" title="Toggle Lights">
         <!-- <i class="fas fa-adjust fa-sm"></i> -->
-        <!-- <i class="fas fa-lightbulb"></i> -->
-        <i class="fas fa-toggle-on fa-sm"></i>
+        <i class="far fa-lightbulb fa-sm"></i>
+        <!-- <i class="fas fa-toggle-on fa-sm"></i> -->
       </a>
     </li>
   {% endif %}
