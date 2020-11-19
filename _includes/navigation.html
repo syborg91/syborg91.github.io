@@ -9,6 +9,24 @@
       </a>
     </li>
     {% endif %}
+    {% if site.project == true %}
+      <li>
+        <a href="{{ 'projects' | relative_url }}" title="Projects">
+          <!-- <i class="fas fa-sticky-note fa-sm"></i> -->
+          <i class="fas fa-paperclip fa-sm"></i>
+        </a>
+      </li>
+    {% endif %}
+    {% if site.timeline_enabled == true %}
+      <li>
+        <a href="{{ 'timeline' | relative_url }}" title="Timeline">
+          <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+          <i class="far fa-clock fa-sm"></i>
+          <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+          <!-- <i class="fas fa-glasses"></i> -->
+        </a>
+      </li>
+    {% endif %}
     {% if site.about_enabled == true %}
       <li>
         <a href="{{ 'about' | relative_url }}" title="About me">
