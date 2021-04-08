@@ -9,7 +9,7 @@
       </a>
     </li>
     {% endif %}
-    {% if site.project == true %}
+    {% if site.project_enabled == true %}
       <li>
         <a href="{{ 'projects' | relative_url }}" title="Projects">
           <!-- <i class="fas fa-sticky-note fa-sm"></i> -->
@@ -27,6 +27,24 @@
         </a>
       </li>
     {% endif %}
+    {% if site.research_enabled == true %}
+    <li>
+      <a href="{{ 'research' | relative_url }}" title="Research">
+        <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+        <i class="far fa-lightbulb fa-sm"></i>
+      </a>
+    </li>
+  {% endif %}
+  {% if site.art_enabled == true %}
+  <li>
+    <a href="{{ 'art' | relative_url }}" title="Art">
+      <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+      <i class="fas fa-palette fa-sm"></i>
+      <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+      <!-- <i class="fas fa-glasses"></i> -->
+    </a>
+  </li>
+{% endif %}
     {% if site.about_enabled == true %}
       <li>
         <a href="{{ 'about' | relative_url }}" title="About me">
@@ -34,14 +52,6 @@
           <i class="far fa-comment-dots fa-sm"></i>
           <!-- <i class="fas fa-quote-left fa-sm"></i> -->
           <!-- <i class="fas fa-glasses"></i> -->
-        </a>
-      </li>
-    {% endif %}
-    {% if site.research == true %}
-      <li>
-        <a href="{{ 'about' | relative_url }}" title="Research">
-          <!-- <i class="fas fa-quote-left fa-sm"></i> -->
-          <i class="fas fa-sticky-note fa-sm"></i>
         </a>
       </li>
     {% endif %}

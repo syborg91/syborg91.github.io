@@ -2,8 +2,21 @@
 // Projects
 // =============================================================================
 
-.grid_container {
+// .project {
+//     margin: 0 0 15px 0;
+//     text-align: center;
+//     margin-top: 0px;
+// }
+
+.project-header {
     padding-top: 50px;
+    margin: 0 0 15px 0;
+    text-align: center;
+    margin-top: 0px;
+}
+
+.grid_container {
+    // padding-top: 50px;
     display: grid;
     grid-gap: 4px;
     padding-bottom: 50px;

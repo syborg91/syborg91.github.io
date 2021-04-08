@@ -1,0 +1,40 @@
+---
+layout: default
+title: "Research"
+description: "Research Papers"
+permalink: /research
+sitemap: false
+---
+
+<div class="research">
+    <h1 class="research-header">
+        Research
+      </h1>
+    <div class="">
+        <!-- <a href="https://link.springer.com/chapter/10.1007/978-3-030-64984-5_28" alt="Self-Organising Neural Network Hierarchy" target="_blank"> -->
+            <img src="{% asset projects/self-organising.png @path %}" alt="self-organising" style="width:100%; padding: 0px 16px 16px 16px;"></img>
+        </a>
+        
+        <div class="paper-container">
+          <h4><b>Self-Organising Neural Network Hierarchy</b> <a href="https://link.springer.com/chapter/10.1007/978-3-030-64984-5_28">[Springer]</a> <a href="https://www.researchgate.net/publication/347194930_Self-organising_Neural_Network_Hierarchy">[Research Gate]</a></h4>
+          <!-- <p class="paper-footer"></p> -->
+          <div class="article-list-footer">
+            <span class="article-list-date">
+                Published on 27 November 2020
+            </span>
+          </div>  
+          <br>
+          <p><b>Abstract<b></p>
+          <p class="abstract">
+              Mammalian brains exhibit functional self-organisation between different neocortical regions to form virtual hierarchies from a 
+              physical 2D sheet. We propose a biologically-inspired self-organizing neural network architecture emulating the same. The network 
+              is composed of autoencoder units and driven by a meta-learning rule based on maximizing the Shannon entropy of latent representations 
+              of the input, which optimizes the receptive field placement of each unit within a feature map. Unlike Neural Architecture Search, here 
+              both the network parameters and the architecture are learned simultaneously. In a case study on image datasets, we observe that the 
+              meta-learning rule causes a functional hierarchy to form, and leads to learning progressively better topological configurations and 
+              higher classification performance overall, starting from randomly initialized architectures. In particular, our approach yields competitive 
+              performance in terms of classification accuracy compared to optimal handcrafted architecture(s) with desirable topological features for 
+              this network type, on both MNIST and CIFAR-10 datasets, even though it is not as significant for the latter.</p>
+        </div>
+      </div>
+</div>
