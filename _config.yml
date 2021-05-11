@@ -4,7 +4,7 @@ blog_theme: light # or use dark
 name: Satya Borgohain
 description: Musings of a polymorphic ape.
 paginate: 10
-url: http://syborg.dev
+url: https://www.satyaborg.com
 attribution: https://github.com/nielsenramon/chalk
 
 # Optional settings
@@ -59,6 +59,7 @@ assets:
     - _assets/javascripts
     - _assets/stylesheets
     - _assets/yarn
+    # - _assets/images
 collections:
   my_tags:
     output: true
@@ -70,6 +71,11 @@ defaults:
       type: my_tags
     values:
       layout: articles_by_tag
+  - 
+    scope:
+      path: "_assets/images/artworks"
+    values:
+      image: true
 exclude:
   - .travis.yml
   - bin/*
