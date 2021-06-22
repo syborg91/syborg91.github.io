@@ -1,0 +1,679 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Satya Borgohain | Understanding Tensors in PyTorch 🔥</title>
+  <meta name="description" content="In this first post, I will try to deconstruct tensors which are the fundamental data structures behind neural networks.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:title" content="Understanding Tensors in PyTorch 🔥">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.satyaborg.com/posts/understanding-tensors-in-pytorch">
+  <meta property="og:description" content="In this first post, I will try to deconstruct tensors which are the fundamental data structures behind neural networks.">
+  <meta property="og:site_name" content="Satya Borgohain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://www.satyaborg.com/posts/understanding-tensors-in-pytorch">
+  <meta name="twitter:title" content="Understanding Tensors in PyTorch 🔥">
+  <meta name="twitter:description" content="In this first post, I will try to deconstruct tensors which are the fundamental data structures behind neural networks.">
+
+  
+    <meta property="og:image" content="https://www.satyaborg.com/assets/og-image-6cbaeacf90150547f708f02193f7ded88e88c82b5d6af93a3af40c9fbb76879e.jpg">
+    <meta name="twitter:image" content="https://www.satyaborg.com/assets/og-image-6cbaeacf90150547f708f02193f7ded88e88c82b5d6af93a3af40c9fbb76879e.jpg">
+  
+
+  <link href="https://www.satyaborg.com/feed.xml" type="application/rss+xml" rel="alternate" title="Satya Borgohain Last 10 blog posts" />
+
+  
+    <link rel="stylesheet" type="text/css" href="/assets/fonts-85dab368d056b5d66418fbfd7e55a89f34f644ee811c8218c81017204426121b.css">
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-52f02cbc579651432ae0a95db03cb82d980cf902e72d637a0e0c4bd560f7b816.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-598cce08117bc4a56f87b07f0f823740611915315f9253a584909544900cb189.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-823848c121dd956c158ae9b139af8f75a18c99b71372642aa9274d75f098a7c2.css">
+    
+
+  
+
+  <!-- custom scripts -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/brands.min.js" type="text/javascript"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        inlineMath: [['$','$']]
+      }
+    });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="Satya Borgohain">Satya Borgohain</a>
+  <ul class="header-links">
+    
+    <li>
+      <a href="/tags" title="Tags">
+        <!-- <i class="fas fa-tags fa-sm" aria-hidden="true"></i> -->
+        <i class="fas fa-hashtag fa-sm"></i>
+      </a>
+    </li>
+    
+    
+      <li>
+        <a href="/projects" title="Projects">
+          <!-- <i class="fas fa-sticky-note fa-sm"></i> -->
+          <i class="fas fa-paperclip fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    <li>
+      <a href="/research" title="Research">
+        <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+        <i class="far fa-lightbulb fa-sm"></i>
+      </a>
+    </li>
+  
+  
+  <li>
+    <a href="/artworks" title="Artworks">
+      <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+      <i class="fas fa-palette fa-sm"></i>
+      <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+      <!-- <i class="fas fa-glasses"></i> -->
+    </a>
+  </li>
+
+    
+      <li>
+        <a href="/about" title="About me">
+          <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+          <i class="far fa-comment-dots fa-sm"></i>
+          <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+          <!-- <i class="fas fa-glasses"></i> -->
+        </a>
+      </li>
+    
+    
+  </ul>
+</nav>
+
+
+
+        <article class="article scrollappear">
+          <header class="article-header">
+            <h1>Understanding Tensors in PyTorch 🔥</h1>
+            <p>In this first post, I will try to deconstruct tensors which are the fundamental data structures behind neural networks.</p>
+            <div class="article-list-footer">
+  <span class="article-list-date">
+    July 17, 2019
+  </span>
+  <span class="article-list-divider">-</span>
+  <span class="article-list-minutes">
+    
+    
+      12 minute read
+    
+  </span>
+  <span class="article-list-divider">-</span>
+  <div class="article-list-tags">
+    
+      
+      <a href="/tag/pytorch" title="See all posts with tag 'PyTorch'">PyTorch</a>
+    
+      
+      <a href="/tag/deep-learning" title="See all posts with tag 'Deep Learning'">Deep Learning</a>
+    
+      
+      <a href="/tag/basics" title="See all posts with tag 'Basics'">Basics</a>
+    
+  </div>
+</div>
+          </header>
+
+          <div class="article-content">
+            <blockquote>
+  <p>So we put a tensor in your tensor and attained a higher dimension. Wait what?</p>
+</blockquote>
+
+<p>Let’s start with what a tensor looks like in different dimensions,</p>
+
+<centre>
+<img src="/assets/documentation/post-1/tensors-139f772dc896c9507cd314a08c39e287952189a18528823ec825c31ea7fb3925.jpg" alt="tensor image" />
+
+<a class="text-center" href="https://image.slidesharecdn.com/08-tf-esug2018-sergestinckwich-181008062457/95/towards-machine-learning-in-pharo-with-tensorflow-7-638.jpg?cb=1538979957">Image source</a>
+
+</centre>
+
+<p>For smaller dimensions, we can think in geometric analogies as shown above, like for e.g.</p>
+
+<ul>
+  <li>A 0-d Tensor or Scalar would be a point in space.</li>
+  <li>A 1-d Tensor or Vector would be a line in that space.</li>
+  <li>A 2-d Tensor or Matrix would be a square (or rectangle), and</li>
+  <li>A 3-d Tensor would be a cube (or cuboid)</li>
+</ul>
+
+<p>Similarly we can go further,</p>
+
+<ul>
+  <li>A 4-d Tensor would be a vector of cubes.</li>
+  <li>A 5-d Tensor would be a matrix of cubes.</li>
+  <li>A 6-d Tensor would be a cube made up of cubes.</li>
+  <li>A 7-d Tensor would be a vector of cubes made up of cubes!</li>
+</ul>
+
+<!-- 8-d matrix of cubes made up of cubes
+9-d cube made up of cubes made up of cubes
+10-d vector of 9-d tensors -->
+
+<p>You get the idea.</p>
+
+<p>As you can see, tensors are nothing but a generalisation of things we know and love : scalars, vectors and matrices. Specifically it is a <em>N-dimensional</em> data structure (or container) where <script type="math/tex">N</script> is the number of dimensions. For people familiar with arrays, its just a multi-dimensional array.</p>
+
+<centre>
+<img src="/assets/documentation/post-1/scalar-vector-matrix-tensor-14dd51dd2997407bc6ee4ef9664000b8c09fab9e42ab140df03ad75f6f339712.jpg" alt="tensor image" />
+
+</centre>
+
+<p>As the world around us is three dimensional, we have a hard time visualising tensors, especially as the dimensions go beyond our own. Like imagine a 10-dimensional tensor in your head. What does it look like? Use the analogy of cubes and let me know in the comments below!</p>
+
+<p>But why are they important for deep learning, you ask? Well they are central to linear algebra and also the fundamental data structures of a neural network. Its all N-dimensional tensors under the hood, following some predefined rules (dot products and applying some non-linearity) to compute some output given certain inputs.</p>
+
+<p>Let’s see how we can create tensors in PyTorch.</p>
+
+<h2 id="import-libraries">Import Libraries</h2>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">torch</span> <span class="c1"># the core module of PyTorch
+</span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="n">sns</span> <span class="c1"># For visualisation
+</span><span class="n">torch</span><span class="p">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="c1"># set a seed for reproducibility</span></code></pre></figure>
+
+<p>A good practice before starting any experiment is to set a fixed seed.
+This makes things <em>deterministic</em>, meaning every time we run the experiment certain non-determinisitic (i.e. probabilistic) processes won’t result in different values. And yes, 42 is a reference to <em>The Hitchhiker’s Guide to the Galaxy</em> :)</p>
+
+<h2 id="generating-tensors">Generating Tensors</h2>
+
+<p>There are various ways to generate tensors in PyTorch. Let’s try a few and also check the resulting tensors’ datatypes,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s">'-&gt;'</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">dtype</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s">'-&gt;'</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">dtype</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s">'-&gt;'</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">dtype</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="s">'-&gt;'</span><span class="p">,</span> <span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">dtype</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor(1) -&gt; torch.int64
+    tensor([1.5283e-35]) -&gt; torch.float32
+    tensor([1.5283e-35]) -&gt; torch.float32
+    tensor([2.4548e-37]) -&gt; torch.float32</code></pre></figure>
+
+<blockquote>
+  <p>Note : Here <code class="highlighter-rouge">torch.tensor()</code> with a single number actually returns a scalar value
+with int64 as the data type, whereas the others return a tensor. In general, <code class="highlighter-rouge">torch.tensor()</code>
+accepts a list of numbers and the dimensions/size of the tensor is determined from it.</p>
+</blockquote>
+
+<p>Lets try passing a list of lists to <code class="highlighter-rouge">torch.tensor()</code> as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">]]);</span>
+<span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.Size([3, 3])</code></pre></figure>
+
+<p>So its a 2-d tensor of 3x3 size. We can peek into its contents just to be sure,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[1, 2, 3],
+            [4, 5, 6],
+            [6, 7, 8]])</code></pre></figure>
+
+<p>So we can pass lists like,</p>
+
+<ul>
+  <li><script type="math/tex">[..]</script> which is a list (or an array). It would be a rank 1 or a 1-d tensor.</li>
+  <li><script type="math/tex">[[..],[..],[..]]</script> which is a list of lists. It would be a rank 2 or a 2-d tensor.</li>
+  <li><script type="math/tex">[[[..],[..]],[[..],[..]]]</script> which is a list of lists containing lists. It would be a rank 3 or a 3-d tensor.
+and so on.</li>
+</ul>
+
+<p>The notion of <strong>Rank</strong> is very important when dealing with tensors. In a rigorous mathematical setting, it would have a slightly different meaning, but here I am using the term interchangeably with dimensions.</p>
+
+<p><code class="highlighter-rouge">torch.empty()</code> can be used for randomly initialising a tensor with a given size,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">torch</span><span class="p">.</span><span class="n">empty</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[[1.3515e-36, 0.0000e+00, 6.8664e-44, 7.9874e-44],
+             [6.3058e-44, 6.7262e-44, 7.7071e-44, 6.3058e-44],
+             [6.8664e-44, 7.1466e-44, 1.1771e-43, 6.8664e-44]],<span class="sb">
+
+            [[7.0065e-44, 8.1275e-44, 6.7262e-44, 7.5670e-44],
+             [8.1275e-44, 7.1466e-44, 7.0065e-44, 6.4460e-44],
+</span>             [6.8664e-44, 7.9874e-44, 7.5670e-44, 7.1466e-44]]])</code></pre></figure>
+
+<p>Similarly, <code class="highlighter-rouge">torch.ones()</code> is for creating a tensor with all the values as ones.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">torch</span><span class="p">.</span><span class="n">ones</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[[1., 1., 1., 1.],
+             [1., 1., 1., 1.],
+             [1., 1., 1., 1.]],<span class="sb">
+
+            [[1., 1., 1., 1.],
+             [1., 1., 1., 1.],
+</span>             [1., 1., 1., 1.]]])</code></pre></figure>
+
+<p>Both <code class="highlighter-rouge">torch.empty()</code> and <code class="highlighter-rouge">torch.ones()</code> accept dimensions of the tensor you want to create.</p>
+
+<blockquote>
+  <p>Note : We can use the GPU variant of tensors by just adding <code class="highlighter-rouge">.cuda()</code> at the end. This allows for faster computations by leveraging GPU memory.</p>
+</blockquote>
+
+<h2 id="specifying-data-types-and-type-coercion">Specifying data types and type coercion</h2>
+
+<p>One way to force a PyTorch tensor to be of a specific datatype is to use the <code class="highlighter-rouge">dtype</code> argument as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="n">int32</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">y</span><span class="p">.</span><span class="n">dtype</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.float32
+    torch.int32</code></pre></figure>
+
+<blockquote>
+  <p>Note : The datatypes are specified with <code class="highlighter-rouge">torch.&lt;something&gt;</code>.</p>
+</blockquote>
+
+<p>However, we cannot do this with <code class="highlighter-rouge">torch.Tensor()</code> since it is actually an alias for <code class="highlighter-rouge">torch.FloatTensor()</code> and fixes a default datatype of float rather than inferring it from the tensor passed. On the other hand, datatypes can be explicitly stated with <code class="highlighter-rouge">torch.tensor()</code> (as we saw above).</p>
+
+<p>Now let’s check <code class="highlighter-rouge">torch.tensor()</code>’s default datatype,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">Tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]).</span><span class="n">dtype</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.float32</code></pre></figure>
+
+<p>Another cool thing is that if we just use a <em>dot</em> at the end of a number,
+the tensor becomes of type float,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span><span class="mi">2</span><span class="p">]).</span><span class="n">dtype</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]).</span><span class="n">dtype</span><span class="p">)</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.float32
+    torch.int64</code></pre></figure>
+
+<p>Next up, we can check the sizes or shapes of tensors with
+<code class="highlighter-rouge">.size()</code>,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]).</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.Size([2])</code></pre></figure>
+
+<blockquote>
+  <p>Note : Both <code class="highlighter-rouge">.size()</code> and <code class="highlighter-rouge">.shape</code> works.</p>
+</blockquote>
+
+<p>Did I say tensors can only contain number? They can contain boolean values (or strings) as well.
+Using <code class="highlighter-rouge">dtype=torch.bool</code> we can convert a tensors of ones into a tensor of True(s) as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="p">.</span><span class="nb">bool</span><span class="p">)</span></code></pre></figure>
+
+<p>The tensors should only contain elements of homogeneous datatypes.</p>
+
+<h2 id="generating-tensors-containing-random-numbers">Generating tensors containing random numbers</h2>
+
+<p>Now let’s generate a tensor with <code class="highlighter-rouge">torch.rand()</code>, which will be composed of numbers randomly drawn from a uniform distribution <script type="math/tex">U \backsim [0,1)</script></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[0.4294, 0.8854, 0.5739, 0.2666, 0.6274],
+            [0.2696, 0.4414, 0.2969, 0.8317, 0.1053],
+            [0.2695, 0.3588, 0.1994, 0.5472, 0.0062]])</code></pre></figure>
+
+<p>If U is a random variable uniformly distributed on <script type="math/tex">[0, 1]</script>, then <script type="math/tex">(r1 - r2) * U + r2</script> is uniformly distributed on <script type="math/tex">[r1, r2]</script>. We can also use <code class="highlighter-rouge">uniform_</code> to perform operations inplace (anything with a
+underscore at the end means inplace). Let’s see them in action,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="c1"># Define a few variables
+</span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">r1</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">r2</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># To sample from a uniform distribution
+# Approach 1
+</span><span class="k">print</span><span class="p">((</span><span class="n">r1</span> <span class="o">-</span> <span class="n">r2</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">r2</span><span class="p">)</span>
+
+<span class="c1"># Approach 2
+</span><span class="k">print</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">FloatTensor</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]).</span><span class="n">uniform_</span><span class="p">(</span><span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">))</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[0.9953, 0.2270]])
+    tensor([-0.5995, -0.0875])</code></pre></figure>
+
+<h2 id="indexing-and-slicing">Indexing and slicing</h2>
+
+<p>Both indexing and slicing of PyTorch’s tensors work similar to numpy’s ndarrays and python’s lists. For e.g.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span></code></pre></figure>
+
+<p>We can get a copy of the entire tensor like so,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span><span class="p">[:,:,:]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[[0.5898, 0.7489, 0.3316, 0.0840, 0.3186, 0.7509, 0.2768, 0.4062],
+             [0.4274, 0.6052, 0.3167, 0.0132, 0.9384, 0.7179, 0.9822, 0.8424],
+             [0.7407, 0.6645, 0.7467, 0.4408, 0.3952, 0.2945, 0.7976, 0.9999],
+             [0.9323, 0.4777, 0.6843, 0.7982, 0.5203, 0.1099, 0.9234, 0.9767]],<span class="sb">
+
+            [[0.5355, 0.6715, 0.8545, 0.1427, 0.5750, 0.3447, 0.2765, 0.4843],
+             [0.3656, 0.5375, 0.0905, 0.6682, 0.1834, 0.0282, 0.0847, 0.8121],
+             [0.5522, 0.7084, 0.9103, 0.8601, 0.5659, 0.1395, 0.5961, 0.4317],
+             [0.7865, 0.6097, 0.0239, 0.6577, 0.6302, 0.1751, 0.2286, 0.8689]],
+
+            [[0.3085, 0.6109, 0.7863, 0.0473, 0.8031, 0.4685, 0.4898, 0.8933],
+             [0.9218, 0.3830, 0.0900, 0.1459, 0.8806, 0.6364, 0.6556, 0.3507],
+             [0.7947, 0.8174, 0.7804, 0.9511, 0.3414, 0.0311, 0.4173, 0.0569],
+</span>             [0.7231, 0.4320, 0.8551, 0.9223, 0.3884, 0.5857, 0.5061, 0.5856]]])</code></pre></figure>
+
+<p>We can specify indices for each dimension of the tensor to get the specific element as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor(0.7489)</code></pre></figure>
+
+<p>We can also slice the tensors along a specific dimension as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">,:,:]</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    tensor([[0.5355, 0.6715, 0.8545, 0.1427, 0.5750, 0.3447, 0.2765, 0.4843],
+            [0.3656, 0.5375, 0.0905, 0.6682, 0.1834, 0.0282, 0.0847, 0.8121],
+            [0.5522, 0.7084, 0.9103, 0.8601, 0.5659, 0.1395, 0.5961, 0.4317],
+            [0.7865, 0.6097, 0.0239, 0.6577, 0.6302, 0.1751, 0.2286, 0.8689]])</code></pre></figure>
+
+<p>In case you forgot how slicing worked in python, here’s a quick refresher :</p>
+
+<ul>
+  <li>z[start:stop] - Get all items from <em>start</em> index all the way upto <em>stop</em> index-1</li>
+  <li>z[start:] - Get all items from <em>start</em> index all the way to the end</li>
+  <li>z[:stop] - Get all items from the beginning all the way to the <em>stop</em> index-1</li>
+  <li>z[:] - Get the copy of the entire list</li>
+</ul>
+
+<p>The only difference here is that we are dealing with multiple dimensions for tensors.</p>
+
+<h2 id="0-d-tensor-or-a-scalar">0-d Tensor or a Scalar</h2>
+
+<p>We can have scalars in PyTorch as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">3</span><span class="p">]]);</span>
+<span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    (tensor([[3]]), torch.Size([1, 1]))</code></pre></figure>
+
+<p>or</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    (tensor(3), torch.Size([]))</code></pre></figure>
+
+<p>Note that although their sizes are slightly different, however a 2-d tensor of size 1x1 contains just one number. Similarly a 3-d tensor of size 1x1x1 will also contain a single element and so on.</p>
+
+<p>And since its just a single number we can retrieve it by using <code class="highlighter-rouge">.item()</code></p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span><span class="p">.</span><span class="n">item</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    3</code></pre></figure>
+
+<h2 id="1-d-tensor-or-a-vector">1-d Tensor or a Vector</h2>
+
+<p>Similarly for vectors,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+<span class="n">z</span><span class="p">,</span> <span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    (tensor([0.9008, 0.1170, 0.2945, 0.1563, 0.6122]), torch.Size([5]))</code></pre></figure>
+
+<p>or we can manually define as,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span></code></pre></figure>
+
+<h2 id="2-d-tensor-or-a-matrix">2-d Tensor or a Matrix</h2>
+
+<p>Now let’s generate a 16x16 matrix as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
+<span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.Size([16, 16])</code></pre></figure>
+
+<p>We can visualise the matrix by plotting it as a heatmap. This allow us to quickly get a sense
+of the numbers contained within visually.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"gray"</span><span class="p">)</span></code></pre></figure>
+
+<centre>
+<img src="/assets/documentation/post-1/1-f226efba18d6c4d43ba722f55f197189446d540a62d0f62c968cd7737f77cf89.png" alt="Every 16x16 slice" />
+
+</centre>
+
+<p>The intensity of each block corresponds to the values in the matrix. Doesn’t it look like the
+pixels of very low resolution grayscale image?</p>
+
+<h2 id="3-d-tensor">3-d Tensor</h2>
+
+<p>Now let’s create a 3-d tensor of size 16x16x16 as follows,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">z</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">,</span><span class="mi">16</span><span class="p">);</span>
+<span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">()</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    torch.Size([16, 16, 16])</code></pre></figure>
+
+<p>Now imagine a cube with all the faces having a size of 16. We can visualise each <em>slice</em> of this
+cube along its depth. For the 1st slice,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="mi">0</span><span class="p">,:,:],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"gray"</span><span class="p">)</span></code></pre></figure>
+
+<centre>
+<img src="/assets/documentation/post-1/2-c0f6710fd79a9b473c8db48619a900604bf166d113d4430ade6794b31b766e66.png" alt="Every 16x16 slice" />
+
+</centre>
+
+<p>Similarly, the second slice,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="p">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="mi">1</span><span class="p">,:,:],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"gray"</span><span class="p">)</span></code></pre></figure>
+
+<centre>
+<img src="/assets/documentation/post-1/3-c6c3ff51cba56bb081a4b4d644d89a1550448cc6b0fad5f62eb31ad857b54c37.png" alt="Every 16x16 slice" />
+
+</centre>
+
+<p>and so on. In fact, our whole 16x16x16 cube is made up of 16 of these
+16x16 slices (makes sense doesn’t it?).</p>
+
+<centre>
+<img src="/assets/documentation/post-1/3_d_tensor-9666a4de2036239048b5ae047f2122395978beb6feb7ddcf49139f9b59489462.png" alt="Heat maps of the slices" />
+
+</centre>
+
+<p>Just for fun, let’s examine the cross-section i.e. all the 16 slices of our cube,</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">celluloid</span> <span class="kn">import</span> <span class="n">Camera</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">camera</span> <span class="o">=</span> <span class="n">Camera</span><span class="p">(</span><span class="n">fig</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">z</span><span class="p">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">)):</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">z</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:],</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">'nearest'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"gray"</span><span class="p">);</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">'slice :'</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">bbox</span><span class="o">=</span><span class="p">{</span><span class="s">'facecolor'</span><span class="p">:</span> <span class="s">'white'</span><span class="p">,</span> <span class="s">'pad'</span><span class="p">:</span> <span class="mi">10</span><span class="p">});</span>
+    <span class="n">camera</span><span class="p">.</span><span class="n">snap</span><span class="p">();</span>
+
+<span class="n">animation</span> <span class="o">=</span> <span class="n">camera</span><span class="p">.</span><span class="n">animate</span><span class="p">();</span>
+<span class="n">animation</span><span class="p">.</span><span class="n">save</span><span class="p">(</span><span class="s">'tensors.gif'</span><span class="p">,</span> <span class="n">writer</span> <span class="o">=</span> <span class="s">'imagemagick'</span><span class="p">);</span></code></pre></figure>
+
+<centre>
+<img src="/assets/documentation/post-1/tensors-cdbcdd355cbad596776351c92b23e0c19e8292663a3785dc2280e95a22c5eb33.gif" alt="Every 16x16 slice" />
+
+</centre>
+
+<p>Our 16x16x16 3-d tensor turned out to be composites of 16 different grayscale images in way!
+Looking at matrices and tensors in this way is helpful, especially in the context of image processing since
+images have depth in the form of channels (like RGB) and are composites of 2-d tensors.</p>
+
+<blockquote>
+  <p>Note : The numbers on the axis in all the heatmaps represent indices in the 1st and 2nd dimensions.</p>
+</blockquote>
+
+<p>A very neat feature in PyTorch is the seamless conversion between PyTorch and numpy data structures (tensors to ndarray) by just calling <code class="highlighter-rouge">.numpy()</code>.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">type</span><span class="p">(</span><span class="n">z</span><span class="p">.</span><span class="n">numpy</span><span class="p">())</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-markdown" data-lang="markdown">    numpy.ndarray</code></pre></figure>
+
+<p>This means we can leverage all functions/methods which rely on a numpy array.</p>
+
+<p>Now let’s jump a few dimensions and revisit what a 6-d tensor looked like (remember?),</p>
+
+<centre>
+<img src="/assets/documentation/post-1/5-b2b4189722ed3a13c70ce7d4e7d9d217d8f1886ca272f76da5255c360620dfec.png" alt="Every 16x16 slice" />
+
+</centre>
+
+<p>Let the sizes along each dimension for the tensor be 16x16x16x16x16x16. Think about it :</p>
+<ul>
+  <li>The larger cube represents a 3-d tensor of size 16x16x16.</li>
+  <li>The smaller cubes within also represents a 3-d tensor of size 16x16x16.</li>
+  <li>If the larger cube contains 16x16x16 smaller cubes with each having a size of 16x16x16 we get our 6-d tensor.</li>
+</ul>
+
+<p>Tensors ain’t so scary anymore, right? We will go deeper next time with concepts such as broadcasting and tensor operations. In case you find a typo or something didn’t quite click, please leave a comment below!</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="https://pytorch.org/docs/stable/tensors.html">PyTorch Documentation</a></li>
+  <li><a href="https://course.fast.ai/videos/?lesson=2">fastai course V3</a></li>
+  <li><a href="https://stackoverflow.com/questions/44328530/how-to-get-a-uniform-distribution-in-a-range-r1-r2-in-pytorch">How to get a uniform distribution in a range r1-r2 in pytorch</a></li>
+  <li><a href="https://github.com/jwkvam/celluloid">Celluloid</a></li>
+</ul>
+
+          </div>
+          <div class="article-share">
+            
+            
+            <a href="https://twitter.com/home?status=Understanding+Tensors+in+PyTorch+%F0%9F%94%A5%20-%20https://www.satyaborg.com/posts/understanding-tensors-in-pytorch%20by%20@satyaborg" title="Share on Twitter" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M492 109.5c-17.4 7.7-36 12.9-55.6 15.3 20-12 35.4-31 42.6-53.6 -18.7 11.1-39.4 19.2-61.5 23.5C399.8 75.8 374.6 64 346.8 64c-53.5 0-96.8 43.4-96.8 96.9 0 7.6 0.8 15 2.5 22.1 -80.5-4-151.9-42.6-199.6-101.3 -8.3 14.3-13.1 31-13.1 48.7 0 33.6 17.2 63.3 43.2 80.7C67 210.7 52 206.3 39 199c0 0.4 0 0.8 0 1.2 0 47 33.4 86.1 77.7 95 -8.1 2.2-16.7 3.4-25.5 3.4 -6.2 0-12.3-0.6-18.2-1.8 12.3 38.5 48.1 66.5 90.5 67.3 -33.1 26-74.9 41.5-120.3 41.5 -7.8 0-15.5-0.5-23.1-1.4C62.8 432 113.7 448 168.3 448 346.6 448 444 300.3 444 172.2c0-4.2-0.1-8.4-0.3-12.5C462.6 146 479 129 492 109.5z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.satyaborg.com/posts/understanding-tensors-in-pytorch" title="Share on Facebook" rel="noreferrer noopener" target="_blank">
+              <svg viewBox="0 0 512 512"><path d="M288 192v-38.1c0-17.2 3.8-25.9 30.5-25.9H352V64h-55.9c-68.5 0-91.1 31.4-91.1 85.3V192h-45v64h45v192h83V256h56.4l7.6-64H288z"/></svg>
+            </a>
+          </div>
+
+          
+            <div id="disqus_thread" class="article-comments"></div>
+            <script src="https://syborg-dev.disqus.com/embed.js" async defer></script>
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+          
+        </article>
+        <!-- <footer class="footer scrollappear">
+  <p>
+    Satya Borgohain © 2020 Built with Jekyll + Chalk.
+  </p>
+</footer> -->
+
+<footer class="footer scrollappear">
+  <ul class="footer-links">
+    
+      <li>
+        <a href="https://twitter.com/satyaborg" rel="noreferrer noopener" target="_blank" title="Twitter">
+          <i class="fab fa-twitter fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    
+      <li>
+        <a href="https://github.com/satyaborg" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <i class="fab fa-github fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="https://www.linkedin.com/in/satyaborg" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="mailto:satya.borg@gmail.com" title="Email">
+          <i class="fas fa-envelope fa-sm"></i>
+        </a>
+      </li>
+    
+    
+      <li>
+        <a href="/feed.xml" rel="noreferrer noopener" target="_blank" title="RSS">
+          <i class="fas fa-rss fa-sm"></i>
+        </a>
+      </li>
+    
+  </ul>
+
+  <p style="text-align: center;">
+    Satya Borgohain © 2021 Built and customized with Jekyll + 
+    <a target="_blank" href="https://github.com/nielsenramon/chalk" rel="noopener noreferrer" title="Chalk" aria-label="Clalk - Theme">Chalk</a>.
+  </p>
+
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143745680-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-143745680-2');
+  </script>
+
+
+<script type="text/javascript" src="/assets/vendor-734ddaa553ebf4e6ca703bd7c567ef4a0e43b0ba799607355e56b81e88781318.js"></script>
+
+
+
+
+  <script type="text/javascript" src="/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js"></script>
+
+
+<script type="text/javascript" src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js"></script>
+
+
+</body>
+</html>

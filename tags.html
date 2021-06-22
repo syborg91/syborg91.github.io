@@ -1,40 +1,341 @@
----
-layout: default
-title: "Tags"
-description: "Tag cloud from all the posts"
-permalink: /tags
-sitemap: false
----
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Satya Borgohain | Tags</title>
+  <meta name="description" content="Tag cloud from all the posts">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="tags-page">
+  <meta property="og:title" content="Tags">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.satyaborg.com/tags">
+  <meta property="og:description" content="Tag cloud from all the posts">
+  <meta property="og:site_name" content="Satya Borgohain">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://www.satyaborg.com/tags">
+  <meta name="twitter:title" content="Tags">
+  <meta name="twitter:description" content="Tag cloud from all the posts">
+
+  
+    <meta property="og:image" content="https://www.satyaborg.com/assets/og-image-6cbaeacf90150547f708f02193f7ded88e88c82b5d6af93a3af40c9fbb76879e.jpg">
+    <meta name="twitter:image" content="https://www.satyaborg.com/assets/og-image-6cbaeacf90150547f708f02193f7ded88e88c82b5d6af93a3af40c9fbb76879e.jpg">
+  
+
+  <link href="https://www.satyaborg.com/feed.xml" type="application/rss+xml" rel="alternate" title="Satya Borgohain Last 10 blog posts" />
+
+  
+    <link rel="stylesheet" type="text/css" href="/assets/fonts-85dab368d056b5d66418fbfd7e55a89f34f644ee811c8218c81017204426121b.css">
+  
+
+  
+
+    
+      <link rel="icon" type="image/x-icon" href="/assets/favicon-light-52f02cbc579651432ae0a95db03cb82d980cf902e72d637a0e0c4bd560f7b816.ico">
+      <link rel="apple-touch-icon" href="/assets/apple-touch-icon-light-598cce08117bc4a56f87b07f0f823740611915315f9253a584909544900cb189.png">
+      <link rel="stylesheet" type="text/css" href="/assets/light-823848c121dd956c158ae9b139af8f75a18c99b71372642aa9274d75f098a7c2.css">
+    
+
+  
+
+  <!-- custom scripts -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/brands.min.js" type="text/javascript"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+        inlineMath: [['$','$']]
+      }
+    });
+  </script>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+
+</head>
+
+<body>
+  <main>
+    <div class="grid grid-centered">
+      <div class="grid-cell">
+        <nav class="header-nav scrollappear">
+  <a href="/" class="header-logo" title="Satya Borgohain">Satya Borgohain</a>
+  <ul class="header-links">
+    
+    <li>
+      <a href="/tags" title="Tags">
+        <!-- <i class="fas fa-tags fa-sm" aria-hidden="true"></i> -->
+        <i class="fas fa-hashtag fa-sm"></i>
+      </a>
+    </li>
+    
+    
+      <li>
+        <a href="/projects" title="Projects">
+          <!-- <i class="fas fa-sticky-note fa-sm"></i> -->
+          <i class="fas fa-paperclip fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    <li>
+      <a href="/research" title="Research">
+        <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+        <i class="far fa-lightbulb fa-sm"></i>
+      </a>
+    </li>
+  
+  
+  <li>
+    <a href="/artworks" title="Artworks">
+      <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+      <i class="fas fa-palette fa-sm"></i>
+      <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+      <!-- <i class="fas fa-glasses"></i> -->
+    </a>
+  </li>
+
+    
+      <li>
+        <a href="/about" title="About me">
+          <!-- <i class="fas fa-user-circle fa-sm"></i> -->
+          <i class="far fa-comment-dots fa-sm"></i>
+          <!-- <i class="fas fa-quote-left fa-sm"></i> -->
+          <!-- <i class="fas fa-glasses"></i> -->
+        </a>
+      </li>
+    
+    
+  </ul>
+</nav>
+
+
+
+        <div class="tags-page">
   <h1 class="tags-page-header">
     Tags
   </h1>
 
-  {% assign my_tags = site.collections | where: "label", "my_tags" | first %}
+  
 
-  {% assign sorted_tags = site.tags | sort %}
+  
 
-  {% for tag in sorted_tags %}
+  
 
-    {% assign tag_slug = tag | first %}
-    {% assign upcase_tag_slug = tag_slug | upcase %}
-    {% assign no_of_posts = tag | last | size %}
+    
+    
+    
 
-      {% for my_tag in my_tags.docs %}
-        {% if tag_slug == my_tag.slug %}
-          {% assign tag_name = my_tag.name %}
-        {% endif %}
-      {% endfor %}
-      {% assign upcase_tag_name = tag_name | upcase %}
+      
+      
 
-    {% if upcase_tag_slug != "PROJECT" %}
+    
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <a class="tag-cloud" href="{{ 'tag/' | relative_url }}{{ tag_slug }}" title="See all posts by {{ upcase_tag_name }} tag"
-      style="font-size: {{ no_of_posts  |  times: 15 | plus: 120  }}%">
-        <span>{{ upcase_tag_name }}<sup> ({{ no_of_posts }})</sup></span>
+      <a class="tag-cloud" href="/tag/basics" title="See all posts by BASICS tag"
+      style="font-size: 135%">
+        <span>BASICS<sup> (1)</sup></span>
       </a>
-    {% endif %}
+    
 
-  {% endfor %}
+  
+
+    
+    
+    
+
+      
+      
+
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="tag-cloud" href="/tag/books" title="See all posts by BOOKS tag"
+      style="font-size: 135%">
+        <span>BOOKS<sup> (1)</sup></span>
+      </a>
+    
+
+  
+
+    
+    
+    
+
+      
+      
+
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="tag-cloud" href="/tag/deep-learning" title="See all posts by DEEP LEARNING tag"
+      style="font-size: 135%">
+        <span>DEEP LEARNING<sup> (1)</sup></span>
+      </a>
+    
+
+  
+
+    
+    
+    
+
+      
+      
+
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="tag-cloud" href="/tag/jupyter" title="See all posts by JUPYTER tag"
+      style="font-size: 135%">
+        <span>JUPYTER<sup> (1)</sup></span>
+      </a>
+    
+
+  
+
+    
+    
+    
+
+      
+      
+
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="tag-cloud" href="/tag/nlp" title="See all posts by NLP tag"
+      style="font-size: 135%">
+        <span>NLP<sup> (1)</sup></span>
+      </a>
+    
+
+  
+
+    
+    
+    
+
+      
+      
+
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="tag-cloud" href="/tag/python" title="See all posts by PYTHON tag"
+      style="font-size: 135%">
+        <span>PYTHON<sup> (1)</sup></span>
+      </a>
+    
+
+  
+
+    
+    
+    
+
+      
+      
+
+    
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a class="tag-cloud" href="/tag/pytorch" title="See all posts by PYTORCH tag"
+      style="font-size: 135%">
+        <span>PYTORCH<sup> (1)</sup></span>
+      </a>
+    
+
+  
 </div>
+
+        <!-- <footer class="footer scrollappear">
+  <p>
+    Satya Borgohain © 2020 Built with Jekyll + Chalk.
+  </p>
+</footer> -->
+
+<footer class="footer scrollappear">
+  <ul class="footer-links">
+    
+      <li>
+        <a href="https://twitter.com/satyaborg" rel="noreferrer noopener" target="_blank" title="Twitter">
+          <i class="fab fa-twitter fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    
+      <li>
+        <a href="https://github.com/satyaborg" rel="noreferrer noopener" target="_blank" title="GitHub">
+          <i class="fab fa-github fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="https://www.linkedin.com/in/satyaborg" rel="noreferrer noopener" target="_blank" title="LinkedIn">
+          <i class="fab fa-linkedin fa-sm"></i>
+        </a>
+      </li>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      <li>
+        <a href="mailto:satya.borg@gmail.com" title="Email">
+          <i class="fas fa-envelope fa-sm"></i>
+        </a>
+      </li>
+    
+    
+      <li>
+        <a href="/feed.xml" rel="noreferrer noopener" target="_blank" title="RSS">
+          <i class="fas fa-rss fa-sm"></i>
+        </a>
+      </li>
+    
+  </ul>
+
+  <p style="text-align: center;">
+    Satya Borgohain © 2021 Built and customized with Jekyll + 
+    <a target="_blank" href="https://github.com/nielsenramon/chalk" rel="noopener noreferrer" title="Chalk" aria-label="Clalk - Theme">Chalk</a>.
+  </p>
+
+</footer>
+
+      </div>
+    </div>
+  </main>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143745680-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-143745680-2');
+  </script>
+
+
+<script type="text/javascript" src="/assets/vendor-734ddaa553ebf4e6ca703bd7c567ef4a0e43b0ba799607355e56b81e88781318.js"></script>
+
+
+
+
+  <script type="text/javascript" src="/assets/scrollappear-e2da8ea567e418637e31266cc5302126eaa79f62a2273739086358b589a89ee6.js"></script>
+
+
+<script type="text/javascript" src="/assets/application-cfde13ac81ddaf4351b2e739603e2baf688d0fcc9aba613fe62bbb1c7b037fb9.js"></script>
+
+
+</body>
+</html>

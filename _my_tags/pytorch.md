@@ -1,4 +1,0 @@
----
-slug: pytorch
-name: PyTorch
----

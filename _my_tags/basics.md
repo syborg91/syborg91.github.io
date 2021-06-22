@@ -1,4 +1,0 @@
----
-slug: basics
-name: Basics
----
